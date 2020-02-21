@@ -8,6 +8,7 @@
 
 import Foundation
 
+//MARK: - JSON Weather structures
 struct WeatherData: Codable {
     let currently:  CurrentConditions
     let daily:      DailyConditions
@@ -34,4 +35,19 @@ struct DailyData: Codable {
     let sunsetTime:         Double
     let temperatureHigh:    Double
     let temperatureLow:     Double
+}
+
+//MARK: - Weather Data Model
+struct WeatherModel {
+    let time:           Double
+    let offset:         Double
+    let temperature:    Double
+    let summary:        String
+    let summaryIcon:    String
+    let feelsLike:      Double
+    let lowTemp:        Double
+    let highTemp:       Double
+    let humidity:       Double
+    let sunrise:        Double
+    let sunset:         Double
 }

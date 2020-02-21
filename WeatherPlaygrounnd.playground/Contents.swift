@@ -1,6 +1,12 @@
 import Foundation
 //Pick a City
-let city = "Calgary"
+// Calgary
+//let lat = "51.0447"
+//let long = "-114.0719"
+// Adelaide
+//let lat = "34.9285"
+//let long = "138.6007"
+let city = "Canada"
 
 func cleanCityName(_ city: String) -> String {
     var cleanCity  = city
@@ -216,20 +222,6 @@ func parseJSONWeather(_ weatherData: Data) -> WeatherModel? {
 }
 
 func updateWeather(_ weather: WeatherModel) {
-    /* currently.icon:
-     clear-day      : sun.max
-     clear-night    : sun.max.fill
-     rain           : cloud.rain
-     snow           : cloud.snow
-     sleet          : cloud.sleet
-     wind           : wind
-     fog            : cloud.fog
-     cloudy         : cloud
-     partly-cloudy-day   : cloud.sun
-     partly-cloudy-night : cloud.sun.fill
-     default             : questionmark
-     */
-    
     
     switch weather.summaryIcon {
     case "clear-day" :
@@ -314,12 +306,7 @@ print()
 
 //MARK: - Weather entry point
 
-// Calgary
-//let lat = "51.0447"
-//let long = "-114.0719"
-// Adelaide
-//let lat = "34.9285"
-//let long = "138.6007"
+
 
 print("Weather Entry point")
 while !sharedData.locationDone {
