@@ -23,7 +23,6 @@ struct CurrentConditions: Codable {
     let apparentTemperature:    Double
 }
 
-//FIXME: JSON Parser pukes on DailyCondtions
 struct DailyConditions: Codable {
     let summary:    String
     let icon:       String
