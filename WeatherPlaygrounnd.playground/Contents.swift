@@ -6,7 +6,7 @@ import Foundation
 // Adelaide
 //let lat = "34.9285"
 //let long = "138.6007"
-let city = "Canada"
+let city = "Calgary"
 
 func cleanCityName(_ city: String) -> String {
     var cleanCity  = city

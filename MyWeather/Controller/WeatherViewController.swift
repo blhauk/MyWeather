@@ -10,6 +10,7 @@ import UIKit
 
 class WeatherViewController: UIViewController {
     @IBOutlet weak var searchTextField: UITextField!
+    @IBOutlet weak var cityLabel: UILabel!
     
     var weatherManager = WeatherManager()
 
@@ -23,18 +24,42 @@ class WeatherViewController: UIViewController {
 
 //MARK: - UITextFieldDelegate
 extension WeatherViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    
+    @IBAction func locationPressed(_ sender: UIButton) {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status
+        print("locationPressed City is: '\(searchTextField.text!)'")
         searchTextField.endEditing(true)
-        print("textFieldShouldReturn City is: '\(searchTextField.text!)'")
-        return true
     }
+  
+    // Asks the delegate if editing should stop in the specified text field
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        print("textFieldShouldEndEditing City is '\(searchTextField.text!)'")
+        if textField.text != "" {
+            textField.placeholder = "Search"
+            return true
+        } else {
+            textField.placeholder = "Type something"
+            return false
+        }
+    }
+    
+    // Tells the delegate that editing stopped for the specified text field
     func textFieldDidEndEditing(_ textField: UITextField) {
         if var city = searchTextField.text {
+            self.cityLabel.text = city
             city = cleanCityName(city)
             print("textFieldDidEndEditing City is: '\(city)'")
         }
     }
     
+    // Asks the delegate if the text field should process the pressing of the return button
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        searchTextField.endEditing(true)
+        print("textFieldShouldReturn City is: '\(searchTextField.text!)'")
+        return true
+    }
+    
+    // Ensure City Name has no trailing blanks, blanks are escaped and word capitalized
     func cleanCityName(_ city: String) -> String {
         var cleanCity  = city
         
@@ -45,7 +70,9 @@ extension WeatherViewController: UITextFieldDelegate {
         
         // Make city 'URL Clean' (eg. replace spaces with "%20'
         cleanCity = cleanCity.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-        return cleanCity
+        
+        // Capitalize each word (eg. Las Vegas)
+        return cleanCity.capitalized
     }
 }
 
