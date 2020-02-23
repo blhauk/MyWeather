@@ -26,8 +26,8 @@ class WeatherViewController: UIViewController {
 extension WeatherViewController: UITextFieldDelegate {
     
     @IBAction func locationPressed(_ sender: UIButton) {
-        //Causes the view (or one of its embedded text fields) to resign the first responder status
         print("locationPressed City is: '\(searchTextField.text!)'")
+        //Causes the view (or one of its embedded text fields) to resign the first responder status
         searchTextField.endEditing(true)
     }
   
@@ -49,13 +49,15 @@ extension WeatherViewController: UITextFieldDelegate {
             self.cityLabel.text = city
             city = cleanCityName(city)
             print("textFieldDidEndEditing City is: '\(city)'")
+            weatherManager.fetchLatlong(cityName: city)
         }
+        searchTextField.text = ""
     }
     
     // Asks the delegate if the text field should process the pressing of the return button
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        print("textFieldShouldReturn City is: '\(textField.text!)'")
         searchTextField.endEditing(true)
-        print("textFieldShouldReturn City is: '\(searchTextField.text!)'")
         return true
     }
     
@@ -78,8 +80,13 @@ extension WeatherViewController: UITextFieldDelegate {
 
 //MARK: - WeatherManagerDelegate
 extension WeatherViewController: WeatherManagerDelegate{
-    func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
-        print("didUpdateWeather")
+    func didUpdateLocation(location: LocationModel) {
+        print("======================")
+        print("didUpdateLocation: Latitude: \(location.latitude)")
+        print("didUpdateLocation: Longitude: \(location.longitude)")
+        print("didUpdateLocation: providedLocation: \(location.providedLocation)")
+        print("didUpdateLocation: countryCode: \(location.countryCode)")
+        print("didUpdateLocation: countryName: \(location.countryName)")        
     }
     
     func didFailWithError(error: Error) {
