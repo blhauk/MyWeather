@@ -81,12 +81,17 @@ extension WeatherViewController: UITextFieldDelegate {
 //MARK: - WeatherManagerDelegate
 extension WeatherViewController: WeatherManagerDelegate{
     func didUpdateLocation(location: LocationModel) {
-        print("======================")
-        print("didUpdateLocation: Latitude: \(location.latitude)")
-        print("didUpdateLocation: Longitude: \(location.longitude)")
-        print("didUpdateLocation: providedLocation: \(location.providedLocation)")
-        print("didUpdateLocation: countryCode: \(location.countryCode)")
-        print("didUpdateLocation: countryName: \(location.countryName)")        
+        DispatchQueue.main.async {
+            print("======================")
+            print("didUpdateLocation: Latitude: \(location.latitude)")
+            print("didUpdateLocation: Longitude: \(location.longitude)")
+            print("didUpdateLocation: providedLocation: \(location.providedLocation)")
+            print("didUpdateLocation: countryCode: \(location.countryCode)")
+            print("didUpdateLocation: countryName: \(location.countryName)")
+            print("didUpdateLocation: sharedData Latitude: \(sharedData.latitude)")
+            print("didUpdateLocation: sharedData locationDone: \(sharedData.locationDone)")
+            self.cityLabel.text = sharedData.providedLocation + ", " + sharedData.countryCode
+        }
     }
     
     func didFailWithError(error: Error) {
