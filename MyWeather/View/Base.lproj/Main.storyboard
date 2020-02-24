@@ -86,8 +86,14 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Latitude" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0FA-Bq-dD3" userLabel="City Latitude">
+                                        <rect key="frame" x="268" y="355.5" width="106" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0ti-bh-8Fw" userLabel="Force Vertical Aligment">
-                                        <rect key="frame" x="134" y="355.5" width="240" height="462.5"/>
+                                        <rect key="frame" x="134" y="401.5" width="240" height="416.5"/>
                                     </view>
                                 </subviews>
                                 <constraints>
@@ -111,6 +117,7 @@
                     </view>
                     <connections>
                         <outlet property="cityLabel" destination="CWP-r8-Jsy" id="YLW-QB-3Dg"/>
+                        <outlet property="cityLatitude" destination="0FA-Bq-dD3" id="YtZ-uz-FVe"/>
                         <outlet property="searchTextField" destination="2eh-wL-W34" id="irk-aj-ceO"/>
                     </connections>
                 </viewController>

@@ -11,6 +11,7 @@ import UIKit
 class WeatherViewController: UIViewController {
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var cityLatitude: UILabel!
     
     var weatherManager = WeatherManager()
 
@@ -90,7 +91,8 @@ extension WeatherViewController: WeatherManagerDelegate{
             print("didUpdateLocation: countryName: \(location.countryName)")
             print("didUpdateLocation: sharedData Latitude: \(sharedData.latitude)")
             print("didUpdateLocation: sharedData locationDone: \(sharedData.locationDone)")
-            self.cityLabel.text = sharedData.providedLocation + ", " + sharedData.countryCode
+            self.cityLabel.text = sharedData.providedLocation + ", " + (countryCodes[sharedData.countryCode] ?? "Unknown")
+            self.cityLatitude.text = String(format: "Latitude: %3.3f", sharedData.latitude)
         }
     }
     
