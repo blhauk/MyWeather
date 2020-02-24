@@ -10,7 +10,12 @@ import UIKit
 
 class WeatherViewController: UIViewController {
     @IBOutlet weak var searchTextField: UITextField!
+    
     @IBOutlet weak var cityLabel: UILabel!
+   
+    @IBOutlet weak var currentTemp: UILabel!
+    
+    
     @IBOutlet weak var latitude: UILabel!
     @IBOutlet weak var longitude: UILabel!
     
@@ -35,7 +40,6 @@ extension WeatherViewController: UITextFieldDelegate {
   
     // Asks the delegate if editing should stop in the specified text field
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        print("textFieldShouldEndEditing City is '\(searchTextField.text!)'")
         if textField.text != "" {
             textField.placeholder = "Search"
             return true
@@ -50,7 +54,6 @@ extension WeatherViewController: UITextFieldDelegate {
         if var city = searchTextField.text {
             self.cityLabel.text = city
             city = cleanCityName(city)
-            print("textFieldDidEndEditing City is: '\(city)'")
             weatherManager.fetchLatlong(cityName: city)
         }
         searchTextField.text = ""
@@ -58,7 +61,6 @@ extension WeatherViewController: UITextFieldDelegate {
     
     // Asks the delegate if the text field should process the pressing of the return button
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print("textFieldShouldReturn City is: '\(textField.text!)'")
         searchTextField.endEditing(true)
         return true
     }
@@ -95,6 +97,14 @@ extension WeatherViewController: WeatherManagerDelegate{
             self.cityLabel.text = sharedData.providedLocation + ", " + (countryCodes[sharedData.countryCode] ?? "Unknown")
             self.latitude.text = String(format: "%3.3f", sharedData.latitude)
             self.longitude.text = String(format: "%3.3f", sharedData.longitude)
+        }
+    }
+    
+    func didUpdateWeather(weather: WeatherModel) {
+        DispatchQueue.main.async {
+            print("======================")
+            print("didUpdateWeather: Temperature: \(sharedData.temperature)")
+            self.currentTemp.text = String(format: "%3.1f", sharedData.temperature)
         }
     }
     
