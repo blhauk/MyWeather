@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2924240023FE7BEA0059FAA5 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292423FF23FE7BEA0059FAA5 /* LocationModel.swift */; };
+		2924240023FE7BEA0059FAA5 /* CityLocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292423FF23FE7BEA0059FAA5 /* CityLocationModel.swift */; };
 		2924240223FE7C5E0059FAA5 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924240123FE7C5E0059FAA5 /* WeatherModel.swift */; };
 		2924240823FE7E850059FAA5 /* SharedDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924240723FE7E850059FAA5 /* SharedDataModel.swift */; };
 		2924240A23FE85FF0059FAA5 /* WeatherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924240923FE85FF0059FAA5 /* WeatherManager.swift */; };
@@ -21,7 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		292423FF23FE7BEA0059FAA5 /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
+		292423FF23FE7BEA0059FAA5 /* CityLocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityLocationModel.swift; sourceTree = "<group>"; };
 		2924240123FE7C5E0059FAA5 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 		2924240723FE7E850059FAA5 /* SharedDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataModel.swift; sourceTree = "<group>"; };
 		2924240923FE85FF0059FAA5 /* WeatherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherManager.swift; sourceTree = "<group>"; };
@@ -33,8 +33,8 @@
 		2930055823FE65F900715199 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2930055B23FE65F900715199 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2930055D23FE65F900715199 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2930056923FE6E8E00715199 /* WeatherPlaygrounnd.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = WeatherPlaygrounnd.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		29B016BC240391600044F879 /* CountryCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodes.swift; sourceTree = "<group>"; };
+		29DD48192404FDF700859E9F /* Mapquest.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = Mapquest.playground; path = MyWeather/Mapquest.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,8 +52,8 @@
 			isa = PBXGroup;
 			children = (
 				2930054E23FE65F800715199 /* MyWeather */,
-				2930056923FE6E8E00715199 /* WeatherPlaygrounnd.playground */,
 				2930054D23FE65F800715199 /* Products */,
+				29DD48192404FDF700859E9F /* Mapquest.playground */,
 			);
 			sourceTree = "<group>";
 		};
@@ -84,7 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				29B016BC240391600044F879 /* CountryCodes.swift */,
-				292423FF23FE7BEA0059FAA5 /* LocationModel.swift */,
+				292423FF23FE7BEA0059FAA5 /* CityLocationModel.swift */,
 				2924240123FE7C5E0059FAA5 /* WeatherModel.swift */,
 				2924240723FE7E850059FAA5 /* SharedDataModel.swift */,
 			);
@@ -181,7 +181,7 @@
 			files = (
 				2924240223FE7C5E0059FAA5 /* WeatherModel.swift in Sources */,
 				2930055423FE65F800715199 /* WeatherViewController.swift in Sources */,
-				2924240023FE7BEA0059FAA5 /* LocationModel.swift in Sources */,
+				2924240023FE7BEA0059FAA5 /* CityLocationModel.swift in Sources */,
 				2924240823FE7E850059FAA5 /* SharedDataModel.swift in Sources */,
 				2930055023FE65F800715199 /* AppDelegate.swift in Sources */,
 				2924240A23FE85FF0059FAA5 /* WeatherManager.swift in Sources */,

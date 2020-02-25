@@ -19,7 +19,7 @@ let weatherURL = "https://api.darksky.net/forecast/"
 var sharedData = SharedData.sharedData
 
 protocol WeatherManagerDelegate {
-    func didUpdateLocation(location: LocationModel)
+    func didUpdateLocation(location: CityLocationModel)
     func didUpdateWeather(weather: WeatherModel)
     func didFailWithError(error: Error)
 }
@@ -59,11 +59,11 @@ struct WeatherManager {
         }
     }
     
-    func parseJSONLocation(_ locationData: Data) -> LocationModel? {
+    func parseJSONLocation(_ locationData: Data) -> CityLocationModel? {
         
         let decoder = JSONDecoder()
         
-        do { let decodedData = try decoder.decode(LocationData.self, from: locationData)
+        do { let decodedData = try decoder.decode(CityDataLocation.self, from: locationData)
             
             let latitude =          decodedData.results[0].locations[0].latLng.lat
             let longitude =         decodedData.results[0].locations[0].latLng.lng
@@ -71,7 +71,7 @@ struct WeatherManager {
             let countryCode =       decodedData.results[0].locations[0].adminArea1
             let countryName =       decodedData.results[0].locations[0].adminArea3
             
-            let locationResult = LocationModel(
+            let locationResult = CityLocationModel(
                 latitude:           latitude,
                 longitude:          longitude,
                 providedLocation:   providedLocation,
@@ -169,7 +169,7 @@ struct WeatherManager {
 
 }
 
-func updateLocation(_ location: LocationModel, _ sharedData: SharedData) {
+func updateLocation(_ location: CityLocationModel, _ sharedData: SharedData) {
     sharedData.latitude =           location.latitude
     sharedData.longitude =          location.longitude
     sharedData.providedLocation =   location.providedLocation

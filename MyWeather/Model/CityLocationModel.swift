@@ -9,31 +9,31 @@
 import Foundation
 
 //MARK: - JSON Location Structures
-struct LocationData: Codable {
-    let results: [Results]
+struct CityDataLocation: Codable {
+    let results: [CityResults]
 }
 
-struct Results: Codable {
-    let providedLocation:   Location
-    let locations:          [Locations]
+struct CityResults: Codable {
+    let providedLocation:   CityLocation
+    let locations:          [CityLocations]
 }
 
-struct Location: Codable {
+struct CityLocation: Codable {
     let location: String
 }
-struct Locations: Codable {
-    let latLng:     LatLng
+struct CityLocations: Codable {
+    let latLng:     CityLatLng
     let adminArea1: String // Country code - eg. CA for Canada
-    let adminArea3: String // Countr name - eg. Canada for CA
+    let adminArea3: String // Country name - eg. Canada for CA
 }
 
-struct LatLng: Codable {
+struct CityLatLng: Codable {
     let lat: Double
     let lng: Double
 }
 
 //MARK: - Location Data Model
-struct LocationModel {
+struct CityLocationModel {
     let latitude:           Double
     let longitude:          Double
     let providedLocation:   String
