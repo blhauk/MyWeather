@@ -1,4 +1,80 @@
 import UIKit
 
-let url =  https://open.mapquestapi.com/geocoding/v1/reverse?key=aOjpUyVev1Jt4GIGcZ34qFfx8bJt1DR5&location=51.053423,-114.062589
+let latitude =  43.654
+let longitude = -79.387
+let locationAppid = "aOjpUyVev1Jt4GIGcZ34qFfx8bJt1DR5"
+let latlongurl =  "https://open.mapquestapi.com/geocoding/v1/reverse"
 
+let url =  "https://open.mapquestapi.com/geocoding/v1/reverse?key=aOjpUyVev1Jt4GIGcZ34qFfx8bJt1DR5&location=51.053423,-114.062589"
+
+struct LatLongLocation: Codable {
+    let results: [LatLongResults]
+}
+
+struct LatLongResults: Codable {
+    let locations: [LatLongLocations]
+}
+
+struct LatLongLocations: Codable {
+    let adminArea5: String
+}
+
+struct LatLongLocationModel {
+    let city: String
+}
+
+func queryCity(with urlString: String) {
+     if let url = URL(string: urlString) {
+         let session = URLSession(configuration: .default)
+         
+         let task = session.dataTask(with: url) { (data, response, error) in
+             if error != nil {
+                 //self.delegate?.didFailWithError(error: error!)
+                 return
+             }
+             
+             if let safeData = data {
+                 if let location = parseJSONLatLong(safeData) {
+                    print(location.city)
+                     //updateLocation(location, sharedData)
+                     //self.delegate?.didUpdateLocation(location: location)
+                 } else {
+                     print("LatLong Location parseJSON failed")
+                 }
+             }
+         }
+         task.resume()
+     } else {
+         print("URL call failed")
+     }
+ }
+
+func fetchCity(latitude: Double, longitude: Double){
+    let latlong = String(latitude) + ","  + String(longitude)
+    let urlLocationQuery  = latlongurl + "?key=\(locationAppid)" + "&location=\(latlong)"
+    print("fetchCity urlLocationQuery is  \(urlLocationQuery)")
+    queryCity(with: urlLocationQuery)
+}
+
+func parseJSONLatLong(_ locationData: Data) -> LatLongLocationModel? {
+    print("Inside parseJSONLatLong")
+    let decoder = JSONDecoder()
+    
+    do { let decodedData = try decoder.decode(LatLongLocation.self, from: locationData)
+        
+        let city = decodedData.results[0].locations[0].adminArea5
+        
+        let locationResult = LatLongLocationModel(
+            city: city
+        )
+        
+        return locationResult
+    } catch {
+        print("Inside parseJSONLocation catch")
+        return nil
+    }
+}
+
+fetchCity(latitude: latitude, longitude: longitude)
+
+//print(LatLongLocationModel.city)

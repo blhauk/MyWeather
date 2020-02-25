@@ -9,7 +9,8 @@
 import Foundation
 
 let locationAppid = "aOjpUyVev1Jt4GIGcZ34qFfx8bJt1DR5"
-let locationURL = "https://open.mapquestapi.com/geocoding/v1/address"
+let cityLocationURL = "https://open.mapquestapi.com/geocoding/v1/address"
+let latlongurl =  "https://open.mapquestapi.com/geocoding/v1/reverse"
 
 let weatherAppid = "ce110c139ae40e4bc757dd1fa9502e5d"
 let weatherUnits = "si"
@@ -28,7 +29,7 @@ struct WeatherManager {
     var delegate: WeatherManagerDelegate?
     
     func fetchLatlong(cityName: String){
-        let urlLocationQuery  = locationURL + "?key=\(locationAppid)" + "&location=\(cityName)"
+        let urlLocationQuery  = cityLocationURL + "?key=\(locationAppid)" + "&location=\(cityName)"
         print("fetchLatlong urlLocationQuery is  \(urlLocationQuery)")
         queryLatLong(with: urlLocationQuery)
         fetchWeather(latitude: sharedData.latitude, longitude: sharedData.longitude)
@@ -45,7 +46,7 @@ struct WeatherManager {
                 }
                 
                 if let safeData = data {
-                    if let location = self.parseJSONLocation(safeData) {
+                    if let location = self.parseJSONCityLocation(safeData) {
                         updateLocation(location, sharedData)
                         self.delegate?.didUpdateLocation(location: location)
                     } else {
@@ -59,7 +60,7 @@ struct WeatherManager {
         }
     }
     
-    func parseJSONLocation(_ locationData: Data) -> CityLocationModel? {
+    func parseJSONCityLocation(_ locationData: Data) -> CityLocationModel? {
         
         let decoder = JSONDecoder()
         

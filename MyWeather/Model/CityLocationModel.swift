@@ -8,7 +8,7 @@
 
 import Foundation
 
-//MARK: - JSON Location Structures
+//MARK: - JSON City Location Structures
 struct CityDataLocation: Codable {
     let results: [CityResults]
 }
@@ -32,7 +32,7 @@ struct CityLatLng: Codable {
     let lng: Double
 }
 
-//MARK: - Location Data Model
+//MARK: - City Location Data Model
 struct CityLocationModel {
     let latitude:           Double
     let longitude:          Double
