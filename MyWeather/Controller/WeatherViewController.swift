@@ -20,6 +20,13 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var currentTemp: UILabel!
     
     
+    @IBOutlet weak var feelsLike: UILabel!
+    @IBOutlet weak var humidity: UILabel!
+    @IBOutlet weak var lowTemp: UILabel!
+    @IBOutlet weak var highTemp: UILabel!
+    @IBOutlet weak var localTime: UILabel!
+    @IBOutlet weak var sunRise: UILabel!
+    @IBOutlet weak var sunSet: UILabel!
     @IBOutlet weak var latitude: UILabel!
     @IBOutlet weak var longitude: UILabel!
     
@@ -91,11 +98,11 @@ extension WeatherViewController: WeatherManagerDelegate{
     func didUpdateLocation(location: LocationModel) {
         DispatchQueue.main.async {
             print("======================")
-            print("didUpdateLocation: Latitude: \(location.latitude)")
-            print("didUpdateLocation: Longitude: \(location.longitude)")
-            print("didUpdateLocation: providedLocation: \(location.providedLocation)")
-            print("didUpdateLocation: countryCode: \(location.countryCode)")
-            print("didUpdateLocation: countryName: \(location.countryName)")
+            print("didUpdateLocation: Latitude: \(sharedData.latitude)")
+            print("didUpdateLocation: Longitude: \(sharedData.longitude)")
+            print("didUpdateLocation: providedLocation: \(sharedData.providedLocation)")
+            print("didUpdateLocation: countryCode: \(sharedData.countryCode)")
+            print("didUpdateLocation: countryName: \(sharedData.countryName)")
             print("didUpdateLocation: sharedData Latitude: \(sharedData.latitude)")
             print("didUpdateLocation: sharedData locationDone: \(sharedData.locationDone)")
             self.cityLabel.text = sharedData.providedLocation + ", " + (countryCodes[sharedData.countryCode] ?? "Unknown")
@@ -112,9 +119,18 @@ extension WeatherViewController: WeatherManagerDelegate{
             print("didUpdateWeather: Summaryicon: \(sharedData.summaryIcon)")
             print("didUpdateWeather: Appleicon: \(sharedData.appleIcon)")
             print("didUpdateWeather: Localtime: \(sharedData.localTime)")
+            print("didUpdateWeather: Humidity: \(sharedData.humidity)")
             self.currentTemp.text = String(format: "%3.1f", sharedData.temperature)
             self.summary.text = sharedData.summary
             self.conditionImage.image = UIImage(systemName: sharedData.appleIcon)
+            
+            self.feelsLike.text =  String(format: "%3.1f°C", sharedData.feelsLike)
+            self.humidity.text  = String(format: "%3.0f%%", sharedData.humidity*100)
+            self.lowTemp.text = String(format: "%3.1f°C", sharedData.lowTemp)
+            self.highTemp.text = String(format: "%3.1f°C", sharedData.highTemp)
+            self.localTime.text = sharedData.localTime
+            self.sunRise.text = sharedData.localSunriseTime
+            self.sunSet.text = sharedData.localSunsetTime
         }
     }
     
