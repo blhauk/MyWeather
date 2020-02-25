@@ -13,6 +13,10 @@ class WeatherViewController: UIViewController {
     
     @IBOutlet weak var cityLabel: UILabel!
    
+    @IBOutlet weak var summary: UILabel!
+    @IBOutlet weak var conditionImage: UIImageView!
+    
+    
     @IBOutlet weak var currentTemp: UILabel!
     
     
@@ -104,7 +108,13 @@ extension WeatherViewController: WeatherManagerDelegate{
         DispatchQueue.main.async {
             print("======================")
             print("didUpdateWeather: Temperature: \(sharedData.temperature)")
+            print("didUpdateWeather: Summary: \(sharedData.summary)")
+            print("didUpdateWeather: Summaryicon: \(sharedData.summaryIcon)")
+            print("didUpdateWeather: Appleicon: \(sharedData.appleIcon)")
+            print("didUpdateWeather: Localtime: \(sharedData.localTime)")
             self.currentTemp.text = String(format: "%3.1f", sharedData.temperature)
+            self.summary.text = sharedData.summary
+            self.conditionImage.image = UIImage(systemName: sharedData.appleIcon)
         }
     }
     

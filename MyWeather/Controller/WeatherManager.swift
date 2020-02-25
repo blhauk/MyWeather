@@ -209,7 +209,7 @@ func updateWeather(_ weather: WeatherModel) {
     
     let offset = weather.offset * 3600
     
-    let localGMTTime    = weather.time
+    let localGMTTime    = NSDate().timeIntervalSince1970
     let localGMTSunrise = weather.sunrise
     let localGMTSunset  = weather.sunset
     
