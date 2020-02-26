@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 let locationAppid = "aOjpUyVev1Jt4GIGcZ34qFfx8bJt1DR5"
 let cityLocationURL = "https://open.mapquestapi.com/geocoding/v1/address"
@@ -20,14 +21,17 @@ let weatherURL = "https://api.darksky.net/forecast/"
 var sharedData = SharedData.sharedData
 
 protocol WeatherManagerDelegate {
-    func didUpdateLocation(location: CityLocationModel)
+    func didUpdateCityLocation(location: CityLocationModel)
+    func didUpdateLatLongLocation(location: LatLongLocationModel)
     func didUpdateWeather(weather: WeatherModel)
     func didFailWithError(error: Error)
 }
 
+//MARK: - WeatherManager struct
 struct WeatherManager {
     var delegate: WeatherManagerDelegate?
     
+    //MARK: - Fetch LatLong from City Name
     func fetchLatlong(cityName: String){
         let urlLocationQuery  = cityLocationURL + "?key=\(locationAppid)" + "&location=\(cityName)"
         print("fetchLatlong urlLocationQuery is  \(urlLocationQuery)")
@@ -47,8 +51,8 @@ struct WeatherManager {
                 
                 if let safeData = data {
                     if let location = self.parseJSONCityLocation(safeData) {
-                        updateLocation(location, sharedData)
-                        self.delegate?.didUpdateLocation(location: location)
+                        updateCityLocation(location, sharedData)
+                        self.delegate?.didUpdateCityLocation(location: location)
                     } else {
                         print("Location parseJSON failed")
                     }
@@ -86,6 +90,8 @@ struct WeatherManager {
             return nil
         }
     }
+    
+    //MARK: - Fetch Weather from LatLong
     func fetchWeather(latitude: Double, longitude: Double)  {
         // urlWeatherString: https://api.darksky.net/forecast/ce110c139ae40e4bc757dd1fa9502e5d/51.053423,-114.062589?units=si
         while !sharedData.locationDone {
@@ -128,6 +134,7 @@ struct WeatherManager {
             print("URL call failed")
         }
     }
+        
     func parseJSONWeather(_ weatherData: Data) -> WeatherModel? {
         
         let decoder = JSONDecoder()
@@ -167,10 +174,66 @@ struct WeatherManager {
             return nil
         }
     }
-
+    
+    //MARK: - Fetch city name from lat/long
+    func fetchCity(latitude: Double, longitude: Double){
+        let latlong          = String(latitude) + ","  + String(longitude)
+        let urlLocationQuery = latlongurl + "?key=\(locationAppid)" + "&location=\(latlong)"
+        print("fetchCity urlLocationQuery is  \(urlLocationQuery)")
+        queryCity(with: urlLocationQuery)
+    }
+    
+    func queryCity(with urlString: String) {
+        if let url = URL(string: urlString) {
+            let session = URLSession(configuration: .default)
+            
+            let task = session.dataTask(with: url) { (data, response, error) in
+                if error != nil {
+                    self.delegate?.didFailWithError(error: error!)
+                    return
+                }
+                
+                if let safeData = data {
+                    if let location = self.parseJSONLatLong(safeData) {
+                        print("City is: \(location.city)")
+                        print("Country Code is: \(location.countryCode)")
+                        //updateLatLongLocation(location, sharedData)
+                        //self.delegate?.didUpdateLatLongLocation(location: location)
+                    } else {
+                        print("LatLong Location parseJSON failed")
+                    }
+                }
+            }
+            task.resume()
+        } else {
+            print("URL call failed")
+        }
+    }
+    
+    func parseJSONLatLong(_ locationData: Data) -> LatLongLocationModel? {
+        print("Inside parseJSONLatLong")
+        let decoder = JSONDecoder()
+        
+        do { let decodedData = try decoder.decode(LatLongLocation.self, from: locationData)
+            
+            let city = decodedData.results[0].locations[0].adminArea5
+            let countryCode = decodedData.results[0].locations[0].adminArea1
+            
+            let locationResult = LatLongLocationModel(
+                city: city,
+                countryCode: countryCode
+            )
+            
+            return locationResult
+        } catch {
+            print("Inside parseJSONLocation catch")
+            return nil
+        }
+    }
 }
 
-func updateLocation(_ location: CityLocationModel, _ sharedData: SharedData) {
+//MARK: - Update SharedData from CityLocationModel
+func updateCityLocation(_ location: CityLocationModel, _ sharedData: SharedData) {
     sharedData.latitude =           location.latitude
     sharedData.longitude =          location.longitude
     sharedData.providedLocation =   location.providedLocation
@@ -179,7 +242,13 @@ func updateLocation(_ location: CityLocationModel, _ sharedData: SharedData) {
     sharedData.locationDone =       true
 }
 
+//MARK: - Update SharedData from LatLongLocationModel
+func updateLatLongLocation(_ location: LatLongLocationModel, _ sharedData: SharedData){
+    
+}
 
+
+//MARK: - Update SharedData from WeatherModel
 func updateWeather(_ weather: WeatherModel) {
     
     switch weather.summaryIcon {
