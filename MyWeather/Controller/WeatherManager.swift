@@ -177,6 +177,8 @@ struct WeatherManager {
     
     //MARK: - Fetch city name from lat/long
     func fetchCity(latitude: Double, longitude: Double){
+        sharedData.latitude = latitude
+        sharedData.longitude = longitude
         let latlong          = String(latitude) + ","  + String(longitude)
         let urlLocationQuery = latlongurl + "?key=\(locationAppid)" + "&location=\(latlong)"
         print("fetchCity urlLocationQuery is  \(urlLocationQuery)")
@@ -195,10 +197,10 @@ struct WeatherManager {
                 
                 if let safeData = data {
                     if let location = self.parseJSONLatLong(safeData) {
-                        print("City is: \(location.city)")
-                        print("Country Code is: \(location.countryCode)")
-                        //updateLatLongLocation(location, sharedData)
-                        //self.delegate?.didUpdateLatLongLocation(location: location)
+                        print("queryCity: City is: \(location.city)")
+                        print("queryCity: Country Code is: \(location.countryCode)")
+                        updateLatLongLocation(location, sharedData)
+                        self.delegate?.didUpdateLatLongLocation(location: location)
                     } else {
                         print("LatLong Location parseJSON failed")
                     }
@@ -211,7 +213,6 @@ struct WeatherManager {
     }
     
     func parseJSONLatLong(_ locationData: Data) -> LatLongLocationModel? {
-        print("Inside parseJSONLatLong")
         let decoder = JSONDecoder()
         
         do { let decodedData = try decoder.decode(LatLongLocation.self, from: locationData)
@@ -244,7 +245,12 @@ func updateCityLocation(_ location: CityLocationModel, _ sharedData: SharedData)
 
 //MARK: - Update SharedData from LatLongLocationModel
 func updateLatLongLocation(_ location: LatLongLocationModel, _ sharedData: SharedData){
-    
+    print("Inside updateLatLongLocation")
+    print(location.city)
+    print(location.countryCode)
+    sharedData.providedLocation = location.city
+    sharedData.countryCode = location.countryCode
+    sharedData.locationDone = true
 }
 
 

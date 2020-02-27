@@ -139,9 +139,13 @@ extension WeatherViewController: WeatherManagerDelegate{
             print("didUpdateWeather: Localtime: \(sharedData.localTime)")
             print("didUpdateWeather: Humidity: \(sharedData.humidity)")
             
-            self.currentTemp.text     = String(format: "%3.1f", sharedData.temperature)
+            self.cityLabel.text = sharedData.providedLocation + ", " + (countryCodes[sharedData.countryCode] ?? "Unknown")
+            
+            
             self.summary.text         = sharedData.summary
             self.conditionImage.image = UIImage(systemName: sharedData.appleIcon)
+            
+            self.currentTemp.text     = String(format: "%3.1f", sharedData.temperature)
             
             self.feelsLike.text =  String(format: "%3.1f°C", sharedData.feelsLike)
             self.humidity.text  = String(format: "%3.0f%%", sharedData.humidity*100)
@@ -164,13 +168,15 @@ extension WeatherViewController: CLLocationManagerDelegate {
         if let location = locations.last {
             locationManager.stopUpdatingLocation()
             let lat = location.coordinate.latitude
-            let lon = location.coordinate.longitude
+            let long = location.coordinate.longitude
             print("")
             print("======================")
             print("LocationManagerDelegate: Latitude is: \(lat)")
-            print("LocationManagerDelegate: Longitude is: \(lon)")
-            weatherManager.fetchCity(latitude: lat, longitude: lon)
-            // weatherManager.fetchWeather(latitude: lat, longitude: lon)
+            print("LocationManagerDelegate: Longitude is: \(long)")
+            sharedData.latitude = lat
+            sharedData.longitude = long
+            weatherManager.fetchCity(latitude: lat, longitude: long)
+            weatherManager.fetchWeather(latitude: lat, longitude: long)
         }
     }
     
