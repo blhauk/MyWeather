@@ -91,90 +91,6 @@ struct WeatherManager {
         }
     }
     
-    //MARK: - Fetch Weather from LatLong
-    func fetchWeather(latitude: Double, longitude: Double)  {
-        // urlWeatherString: https://api.darksky.net/forecast/ce110c139ae40e4bc757dd1fa9502e5d/51.053423,-114.062589?units=si
-        while !sharedData.locationDone {
-            print("Waiting on locationDone")
-            usleep(100000) // Sleep for 0.1 sec
-        }
-        let lat = sharedData.latitude
-        let long = sharedData.longitude
-        let latlong = "/" + String(lat) + "," + String(long)
-        let urlWeatherQuery = weatherURL + weatherAppid + latlong + "?units=\(weatherUnits)"
-        
-        print("fetchWeather urlWeatherQuery is  \(urlWeatherQuery)")
-        
-        sharedData.locationDone = false
-        queryWeather(with: urlWeatherQuery)
-    }
-
-    func queryWeather(with urlString: String) {
-        if let url = URL(string: urlString) {
-            let session = URLSession(configuration: .default)
-            
-            let task = session.dataTask(with: url) { (data, response, error) in
-                if error != nil {
-                    print("Failed with error: \(error!)")
-                }
-                if let safeData = data {
-                    if let weather = self.parseJSONWeather(safeData) {
-                        updateWeather(weather)
-                        self.delegate?.didUpdateWeather(weather: weather)
-                        
-                        
-                        //delegate?.didUpdateWeather(weather: WeatherModel)
-                    } else {
-                        print("Weather: parseJSON failed")
-                    }
-                }
-            }
-            task.resume()
-        } else {
-            print("URL call failed")
-        }
-    }
-        
-    func parseJSONWeather(_ weatherData: Data) -> WeatherModel? {
-        
-        let decoder = JSONDecoder()
-        
-        do { let decodedData = try decoder.decode(WeatherData.self, from: weatherData)
-            
-            
-            let time =          decodedData.currently.time
-            let offset =        decodedData.offset
-            let temperature =   decodedData.currently.temperature
-            let summary =       decodedData.currently.summary
-            let summaryIcon =   decodedData.currently.icon
-            let feelsLike =     decodedData.currently.apparentTemperature
-            let lowTemp =       decodedData.daily.data[0].temperatureLow
-            let highTemp =      decodedData.daily.data[0].temperatureHigh
-            let humidity =      decodedData.currently.humidity
-            let sunrise =       decodedData.daily.data[0].sunriseTime
-            let sunset =        decodedData.daily.data[0].sunsetTime
-            
-            let weatherResult = WeatherModel(
-                time:           time,
-                offset:         offset,
-                temperature:    temperature,
-                summary:        summary,
-                summaryIcon:    summaryIcon,
-                feelsLike:      feelsLike,
-                lowTemp:        lowTemp,
-                highTemp:       highTemp,
-                humidity:       humidity,
-                sunrise:        sunrise,
-                sunset:         sunset
-            )
-            
-            return weatherResult
-        } catch {
-            print("Inside parseJSONWeather catch")
-            return nil
-        }
-    }
-    
     //MARK: - Fetch city name from lat/long
     func fetchCity(latitude: Double, longitude: Double){
         let latlong          = String(latitude) + ","  + String(longitude)
@@ -229,7 +145,95 @@ struct WeatherManager {
             return nil
         }
     }
+    
+    //MARK: - Fetch Weather from LatLong
+    func fetchWeather(latitude: Double, longitude: Double)  {
+        // urlWeatherString: https://api.darksky.net/forecast/ce110c139ae40e4bc757dd1fa9502e5d/51.053423,-114.062589?units=si
+        while !sharedData.locationDone {
+            print("Waiting on locationDone")
+            usleep(100000) // Sleep for 0.1 sec
+        }
+        let lat = sharedData.latitude
+        let long = sharedData.longitude
+        let latlong = "/" + String(lat) + "," + String(long)
+        let urlWeatherQuery = weatherURL + weatherAppid + latlong + "?units=\(weatherUnits)"
+        
+        print("fetchWeather urlWeatherQuery is  \(urlWeatherQuery)")
+        
+        sharedData.locationDone = false
+        queryWeather(with: urlWeatherQuery)
+    }
+
+    func queryWeather(with urlString: String) {
+        if let url = URL(string: urlString) {
+            let session = URLSession(configuration: .default)
+            
+            let task = session.dataTask(with: url) { (data, response, error) in
+                if error != nil {
+                    print("Failed with error: \(error!)")
+                }
+                if let safeData = data {
+                    if let weather = self.parseJSONWeather(safeData) {
+                        updateWeather(weather)
+                        self.delegate?.didUpdateWeather(weather: weather)
+                        
+                        
+                        //delegate?.didUpdateWeather(weather: WeatherModel)
+                    } else {
+                        print("Weather: parseJSON failed")
+                    }
+                }
+            }
+            task.resume()
+        } else {
+            print("URL call failed")
+        }
+    }
+
+    func parseJSONWeather(_ weatherData: Data) -> WeatherModel? {
+        
+        let decoder = JSONDecoder()
+        
+        do { let decodedData = try decoder.decode(WeatherData.self, from: weatherData)
+            
+            
+            let time =          decodedData.currently.time
+            let offset =        decodedData.offset
+            let temperature =   decodedData.currently.temperature
+            let summary =       decodedData.currently.summary
+            let summaryIcon =   decodedData.currently.icon
+            let feelsLike =     decodedData.currently.apparentTemperature
+            let lowTemp =       decodedData.daily.data[0].temperatureLow
+            let highTemp =      decodedData.daily.data[0].temperatureHigh
+            let humidity =      decodedData.currently.humidity
+            let sunrise =       decodedData.daily.data[0].sunriseTime
+            let sunset =        decodedData.daily.data[0].sunsetTime
+            
+            let weatherResult = WeatherModel(
+                time:           time,
+                offset:         offset,
+                temperature:    temperature,
+                summary:        summary,
+                summaryIcon:    summaryIcon,
+                feelsLike:      feelsLike,
+                lowTemp:        lowTemp,
+                highTemp:       highTemp,
+                humidity:       humidity,
+                sunrise:        sunrise,
+                sunset:         sunset
+            )
+            
+            return weatherResult
+        } catch {
+            print("Inside parseJSONWeather catch")
+            return nil
+        }
+    }
+
 }
+
+
+
 
 //MARK: - Update SharedData from CityLocationModel
 func updateCityLocation(_ location: CityLocationModel, _ sharedData: SharedData) {

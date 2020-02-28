@@ -130,7 +130,7 @@ extension WeatherViewController: WeatherManagerDelegate{
             print("didUpdateLocation: countryName: \(sharedData.countryName)")
             print("didUpdateLocation: sharedData Latitude: \(sharedData.latitude)")
             print("didUpdateLocation: sharedData locationDone: \(sharedData.locationDone)")
-            self.cityLabel.text = sharedData.providedLocation + ", " + (countryCodes[sharedData.countryCode] ?? "Unknown")
+            //self.cityLabel.text = sharedData.providedLocation + ", " + (countryCodes[sharedData.countryCode] ?? "Unknown")
             self.latitude.text = String(format: "%3.3f", sharedData.latitude)
             self.longitude.text = String(format: "%3.3f", sharedData.longitude)
         }

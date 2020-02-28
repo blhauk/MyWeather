@@ -85,9 +85,9 @@
 			children = (
 				29B016BC240391600044F879 /* CountryCodes.swift */,
 				292423FF23FE7BEA0059FAA5 /* CityLocationModel.swift */,
+				2978F82324064190001F14E4 /* LatLongLocationodel.swift */,
 				2924240123FE7C5E0059FAA5 /* WeatherModel.swift */,
 				2924240723FE7E850059FAA5 /* SharedDataModel.swift */,
-				2978F82324064190001F14E4 /* LatLongLocationodel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
