@@ -177,8 +177,6 @@ struct WeatherManager {
     
     //MARK: - Fetch city name from lat/long
     func fetchCity(latitude: Double, longitude: Double){
-        sharedData.latitude = latitude
-        sharedData.longitude = longitude
         let latlong          = String(latitude) + ","  + String(longitude)
         let urlLocationQuery = latlongurl + "?key=\(locationAppid)" + "&location=\(latlong)"
         print("fetchCity urlLocationQuery is  \(urlLocationQuery)")

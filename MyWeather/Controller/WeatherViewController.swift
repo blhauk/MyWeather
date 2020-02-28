@@ -110,7 +110,14 @@ extension WeatherViewController: UITextFieldDelegate {
 //MARK: - WeatherManagerDelegate
 extension WeatherViewController: WeatherManagerDelegate{
     func didUpdateLatLongLocation(location: LatLongLocationModel) {
-        print(location.city)
+        DispatchQueue.main.async {
+            print("======================")
+            print("didUpdateLatLongLocation: City: \(location.city)")
+            print("didUpdateLatLongLocation: sharedData Latitude: \(sharedData.latitude)")
+            print("didUpdateLatLongLocation: sharedData locationDone: \(sharedData.locationDone)")
+            self.latitude.text = String(format: "%3.3f", sharedData.latitude)
+            self.longitude.text = String(format: "%3.3f", sharedData.longitude)
+        }
     }
     
     func didUpdateCityLocation(location: CityLocationModel) {
