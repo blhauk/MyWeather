@@ -36,6 +36,7 @@
 		2930055D23FE65F900715199 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2978F82324064190001F14E4 /* LatLongLocationodel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatLongLocationodel.swift; sourceTree = "<group>"; };
 		29B016BC240391600044F879 /* CountryCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodes.swift; sourceTree = "<group>"; };
+		29DF6C3E240A56DC00597BB9 /* Forecast.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Forecast.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +55,7 @@
 			children = (
 				2930054E23FE65F800715199 /* MyWeather */,
 				2930054D23FE65F800715199 /* Products */,
+				29DF6C3E240A56DC00597BB9 /* Forecast.playground */,
 			);
 			sourceTree = "<group>";
 		};

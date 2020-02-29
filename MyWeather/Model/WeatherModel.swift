@@ -16,7 +16,6 @@ struct WeatherData: Codable {
 }
 
 struct CurrentConditions: Codable {
-    let time:                   Double
     let summary:                String
     let icon:                   String
     let temperature:            Double
@@ -39,15 +38,17 @@ struct DailyData: Codable {
 
 //MARK: - Weather Data Model
 struct WeatherModel {
-    let time:           Double
-    let offset:         Double
-    let temperature:    Double
     let summary:        String
     let summaryIcon:    String
+
+    let temperature:    Double
+    
     let feelsLike:      Double
+    let humidity:       Double
     let lowTemp:        Double
     let highTemp:       Double
-    let humidity:       Double
+    
+    let offset:         Double
     let sunrise:        Double
     let sunset:         Double
 }

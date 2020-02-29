@@ -17,7 +17,6 @@ let weatherAppid = "ce110c139ae40e4bc757dd1fa9502e5d"
 let weatherUnits = "si"
 let weatherURL = "https://api.darksky.net/forecast/"
 
-
 var sharedData = SharedData.sharedData
 
 protocol WeatherManagerDelegate {
@@ -34,6 +33,7 @@ struct WeatherManager {
     //MARK: - Fetch LatLong from City Name
     func fetchLatlong(cityName: String){
         let urlLocationQuery  = cityLocationURL + "?key=\(locationAppid)" + "&location=\(cityName)"
+        print("======================")
         print("fetchLatlong urlLocationQuery is  \(urlLocationQuery)")
         queryLatLong(with: urlLocationQuery)
         fetchWeather(latitude: sharedData.latitude, longitude: sharedData.longitude)
@@ -95,6 +95,7 @@ struct WeatherManager {
     func fetchCity(latitude: Double, longitude: Double){
         let latlong          = String(latitude) + ","  + String(longitude)
         let urlLocationQuery = latlongurl + "?key=\(locationAppid)" + "&location=\(latlong)"
+        print("======================")
         print("fetchCity urlLocationQuery is  \(urlLocationQuery)")
         queryCity(with: urlLocationQuery)
     }
@@ -111,6 +112,7 @@ struct WeatherManager {
                 
                 if let safeData = data {
                     if let location = self.parseJSONLatLong(safeData) {
+                        print("======================")
                         print("queryCity: City is: \(location.city)")
                         print("queryCity: Country Code is: \(location.countryCode)")
                         updateLatLongLocation(location, sharedData)
@@ -148,9 +150,9 @@ struct WeatherManager {
     
     //MARK: - Fetch Weather from LatLong
     func fetchWeather(latitude: Double, longitude: Double)  {
-        // urlWeatherString: https://api.darksky.net/forecast/ce110c139ae40e4bc757dd1fa9502e5d/51.053423,-114.062589?units=si
+        print("======================")
         while !sharedData.locationDone {
-            print("Waiting on locationDone")
+            print("fetchWeather: Waiting on locationDone")
             usleep(100000) // Sleep for 0.1 sec
         }
         let lat = sharedData.latitude
@@ -196,33 +198,29 @@ struct WeatherManager {
         
         do { let decodedData = try decoder.decode(WeatherData.self, from: weatherData)
             
-            
-            let time =          decodedData.currently.time
-            let offset =        decodedData.offset
-            let temperature =   decodedData.currently.temperature
             let summary =       decodedData.currently.summary
             let summaryIcon =   decodedData.currently.icon
+            let temperature =   decodedData.currently.temperature
             let feelsLike =     decodedData.currently.apparentTemperature
+            let humidity =      decodedData.currently.humidity
             let lowTemp =       decodedData.daily.data[0].temperatureLow
             let highTemp =      decodedData.daily.data[0].temperatureHigh
-            let humidity =      decodedData.currently.humidity
+            let offset =        decodedData.offset
             let sunrise =       decodedData.daily.data[0].sunriseTime
             let sunset =        decodedData.daily.data[0].sunsetTime
             
             let weatherResult = WeatherModel(
-                time:           time,
-                offset:         offset,
-                temperature:    temperature,
                 summary:        summary,
                 summaryIcon:    summaryIcon,
+                temperature:    temperature,
                 feelsLike:      feelsLike,
+                humidity:       humidity,
                 lowTemp:        lowTemp,
                 highTemp:       highTemp,
-                humidity:       humidity,
+                offset:         offset,
                 sunrise:        sunrise,
                 sunset:         sunset
             )
-            
             return weatherResult
         } catch {
             print("Inside parseJSONWeather catch")
@@ -232,29 +230,32 @@ struct WeatherManager {
 
 }
 
-
-
-
 //MARK: - Update SharedData from CityLocationModel
 func updateCityLocation(_ location: CityLocationModel, _ sharedData: SharedData) {
-    sharedData.latitude =           location.latitude
-    sharedData.longitude =          location.longitude
+    print("======================")
+    print("updateCityLocation: City is: \(location.providedLocation)")
+    print("updateCityLocation: countryCode is: \(location.countryCode)")
+    print("updateCityLocation: countryName is: \(location.countryName)")
+    print("updateCityLocation: latitude is: \(location.latitude)")
+    print("updateCityLocation: longitude is: \(location.longitude)")
+
     sharedData.providedLocation =   location.providedLocation
     sharedData.countryCode =        location.countryCode
     sharedData.countryName =        location.countryName
+    sharedData.latitude =           location.latitude
+    sharedData.longitude =          location.longitude
     sharedData.locationDone =       true
 }
 
 //MARK: - Update SharedData from LatLongLocationModel
 func updateLatLongLocation(_ location: LatLongLocationModel, _ sharedData: SharedData){
-    print("Inside updateLatLongLocation")
-    print(location.city)
-    print(location.countryCode)
+    print("======================")
+    print("updateLatLongLocation: City is: \(location.city)")
+    print("updateLatLongLocation: countryCode is: \(location.countryCode)")
     sharedData.providedLocation = location.city
     sharedData.countryCode = location.countryCode
     sharedData.locationDone = true
 }
-
 
 //MARK: - Update SharedData from WeatherModel
 func updateWeather(_ weather: WeatherModel) {

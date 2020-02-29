@@ -10,6 +10,10 @@ import UIKit
 import CoreLocation
 
 class WeatherViewController: UIViewController {
+    
+    var weatherManager = WeatherManager()
+    let locationManager = CLLocationManager()
+    
     @IBOutlet weak var searchTextField: UITextField!
     
     @IBOutlet weak var cityLabel: UILabel!
@@ -17,9 +21,7 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var summary: UILabel!
     @IBOutlet weak var conditionImage: UIImageView!
     
-    
     @IBOutlet weak var currentTemp: UILabel!
-    
     
     @IBOutlet weak var feelsLike: UILabel!
     @IBOutlet weak var humidity: UILabel!
@@ -31,9 +33,6 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var latitude: UILabel!
     @IBOutlet weak var longitude: UILabel!
     
-    var weatherManager = WeatherManager()
-    let locationManager = CLLocationManager()
-
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -77,7 +76,6 @@ extension WeatherViewController: UITextFieldDelegate {
     // Tells the delegate that editing stopped for the specified text field
     func textFieldDidEndEditing(_ textField: UITextField) {
         if var city = searchTextField.text {
-            self.cityLabel.text = city
             city = cleanCityName(city)
             weatherManager.fetchLatlong(cityName: city)
         }
@@ -123,14 +121,13 @@ extension WeatherViewController: WeatherManagerDelegate{
     func didUpdateCityLocation(location: CityLocationModel) {
         DispatchQueue.main.async {
             print("======================")
-            print("didUpdateLocation: Latitude: \(sharedData.latitude)")
-            print("didUpdateLocation: Longitude: \(sharedData.longitude)")
-            print("didUpdateLocation: providedLocation: \(sharedData.providedLocation)")
-            print("didUpdateLocation: countryCode: \(sharedData.countryCode)")
-            print("didUpdateLocation: countryName: \(sharedData.countryName)")
-            print("didUpdateLocation: sharedData Latitude: \(sharedData.latitude)")
-            print("didUpdateLocation: sharedData locationDone: \(sharedData.locationDone)")
-            //self.cityLabel.text = sharedData.providedLocation + ", " + (countryCodes[sharedData.countryCode] ?? "Unknown")
+            print("didUpdateCityLocation: Latitude: \(sharedData.latitude)")
+            print("didUpdateCityLocation: Longitude: \(sharedData.longitude)")
+            print("didUpdateCityLocation: providedLocation: \(sharedData.providedLocation)")
+            print("didUpdateCityLocation: countryCode: \(sharedData.countryCode)")
+            print("didUpdateCityLocation: countryName: \(sharedData.countryName)")
+            print("didUpdateCityLocation: sharedData Latitude: \(sharedData.latitude)")
+            print("didUpdateCityLocation: sharedData locationDone: \(sharedData.locationDone)")
             self.latitude.text = String(format: "%3.3f", sharedData.latitude)
             self.longitude.text = String(format: "%3.3f", sharedData.longitude)
         }
