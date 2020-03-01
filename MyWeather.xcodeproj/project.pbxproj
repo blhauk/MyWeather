@@ -18,6 +18,7 @@
 		2930055923FE65F900715199 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2930055823FE65F900715199 /* Assets.xcassets */; };
 		2930055C23FE65F900715199 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2930055A23FE65F900715199 /* LaunchScreen.storyboard */; };
 		2978F82424064190001F14E4 /* LatLongLocationodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2978F82324064190001F14E4 /* LatLongLocationodel.swift */; };
+		297F4EE8240B8EEF00EE0B4D /* ForecastModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297F4EE7240B8EEF00EE0B4D /* ForecastModel.swift */; };
 		29B016BD240391600044F879 /* CountryCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B016BC240391600044F879 /* CountryCodes.swift */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,7 @@
 		2930055B23FE65F900715199 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2930055D23FE65F900715199 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2978F82324064190001F14E4 /* LatLongLocationodel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatLongLocationodel.swift; sourceTree = "<group>"; };
+		297F4EE7240B8EEF00EE0B4D /* ForecastModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastModel.swift; sourceTree = "<group>"; };
 		29B016BC240391600044F879 /* CountryCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodes.swift; sourceTree = "<group>"; };
 		29DF6C3E240A56DC00597BB9 /* Forecast.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Forecast.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
@@ -89,6 +91,7 @@
 				292423FF23FE7BEA0059FAA5 /* CityLocationModel.swift */,
 				2978F82324064190001F14E4 /* LatLongLocationodel.swift */,
 				2924240123FE7C5E0059FAA5 /* WeatherModel.swift */,
+				297F4EE7240B8EEF00EE0B4D /* ForecastModel.swift */,
 				2924240723FE7E850059FAA5 /* SharedDataModel.swift */,
 			);
 			path = Model;
@@ -190,6 +193,7 @@
 				2924240A23FE85FF0059FAA5 /* WeatherManager.swift in Sources */,
 				2930055223FE65F800715199 /* SceneDelegate.swift in Sources */,
 				2978F82424064190001F14E4 /* LatLongLocationodel.swift in Sources */,
+				297F4EE8240B8EEF00EE0B4D /* ForecastModel.swift in Sources */,
 				29B016BD240391600044F879 /* CountryCodes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

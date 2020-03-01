@@ -23,6 +23,7 @@ protocol WeatherManagerDelegate {
     func didUpdateCityLocation(location: CityLocationModel)
     func didUpdateLatLongLocation(location: LatLongLocationModel)
     func didUpdateWeather(weather: WeatherModel)
+    func didUpdateForecast(forecast: ForecastModel)
     func didFailWithError(error: Error)
 }
 
@@ -178,9 +179,12 @@ struct WeatherManager {
                     if let weather = self.parseJSONWeather(safeData) {
                         updateWeather(weather)
                         self.delegate?.didUpdateWeather(weather: weather)
-                        
-                        
-                        //delegate?.didUpdateWeather(weather: WeatherModel)
+                    } else {
+                        print("Weather: parseJSON failed")
+                    }
+                    if let forecast = self.parseJSONForecast(safeData) {
+                        updateForecast(forecast: forecast)
+                        self.delegate?.didUpdateForecast(forecast: forecast)
                     } else {
                         print("Weather: parseJSON failed")
                     }
@@ -227,7 +231,57 @@ struct WeatherManager {
             return nil
         }
     }
+  
+    func parseJSONForecast(_ forecastData: Data) -> ForecastModel? {
+        
+        let decoder = JSONDecoder()
+        print("======================")
+        do { let decodedData = try decoder.decode(ForecastData.self, from: forecastData)
+       
+            var summary:     [String] = []
+            var summaryIcon: [String] = []
+            var appleIcon:   [String] = []
+            var humidity:    [Double] = []
+            var lowTemp:     [Double] = []
+            var highTemp:    [Double] = []
+            var offset:      [Double] = []
+            var sunrise:     [Double] = []
+            var sunset:      [Double] = []
+            
+            for i in 1...7 {
+                let icon = decodedData.daily.data[i].icon
+                let forecastAppleIcon = getAppleIcon(summaryIcon: icon)
+                summary.append(decodedData.daily.data[i].summary)
+                summaryIcon.append(decodedData.daily.data[i].icon)
+                appleIcon.append(forecastAppleIcon)
+                humidity.append(decodedData.daily.data[i].humidity)
+                lowTemp.append(decodedData.daily.data[i].temperatureLow)
+                highTemp.append(decodedData.daily.data[i].temperatureHigh)
+                offset.append(decodedData.offset)
+                sunrise.append(decodedData.daily.data[i].sunriseTime)
+                sunset.append(decodedData.daily.data[i].sunsetTime)
+                
+            }
 
+
+            let forecastResult = ForecastModel(
+                forecastSummary:        summary,
+                forecastSummaryIcon:    summaryIcon,
+                forecastAppleIcon:      appleIcon,
+                forecastHumidity:       humidity,
+                forecastLowTemp:        lowTemp,
+                forecastHighTemp:       highTemp,
+                forecastOffset:         offset,
+                forecastSunrise:        sunrise,
+                forecastSunset:         sunset
+            )
+            print("parseJSONForecast: returning forecastResult")
+            return forecastResult
+        } catch {
+            print("Inside parseJSONForecast catch")
+            return nil
+        }
+    }
 }
 
 //MARK: - Update SharedData from CityLocationModel
@@ -257,35 +311,37 @@ func updateLatLongLocation(_ location: LatLongLocationModel, _ sharedData: Share
     sharedData.locationDone = true
 }
 
+//MARK: - Update SharedData from ForecastModel
+func updateForecast(forecast: ForecastModel) {
+    print("======================")
+
+    sharedData.forecastSummary     = forecast.forecastSummary
+    sharedData.forecastSummaryIcon = forecast.forecastSummaryIcon
+    sharedData.forecastAppleIcon   = forecast.forecastAppleIcon
+    
+    sharedData.forecastHumidity = forecast.forecastHumidity
+    sharedData.forecastLowTemp  = forecast.forecastLowTemp
+    sharedData.forecastHighTemp = forecast.forecastHighTemp
+        
+    sharedData.forecastOffset  = forecast.forecastOffset
+    sharedData.forecastSunrise = forecast.forecastSunrise
+    sharedData.forecastSunset  = forecast.forecastSunset
+    
+    print("updateForecast: sharedData forecastSummaryIcon: \(sharedData.forecastSummaryIcon)")
+    print("updateForecast: sharedData forecastAppleIcon: \(sharedData.forecastAppleIcon)")
+    print("updateForecast: sharedData Daily low \(sharedData.forecastLowTemp)")
+    print("updateForecast: sharedData Daily high \(sharedData.forecastHighTemp)")
+    
+}
+
 //MARK: - Update SharedData from WeatherModel
 func updateWeather(_ weather: WeatherModel) {
     
-    switch weather.summaryIcon {
-    case "clear-day" :
-        sharedData.appleIcon = "sun.max"
-    case "clear-night" :
-        sharedData.appleIcon = "sun.max.fill"
-    case "rain" :
-        sharedData.appleIcon = "cloud.rain"
-    case "snow" :
-        sharedData.appleIcon = "cloud.snow"
-    case "sleet" :
-        sharedData.appleIcon = "cloud.sleet"
-    case "wind" :
-        sharedData.appleIcon = "wind"
-    case "fog" :
-        sharedData.appleIcon = "cloud.fog"
-    case "cloudy" :
-        sharedData.appleIcon = "cloud"
-    case "partly-cloudy-day" :
-        sharedData.appleIcon = "cloud.sun"
-    case "partly-cloudy-night" :
-        sharedData.appleIcon = "cloud.sun.fill"
-    default :
-        print("Case statement default: \(weather.summaryIcon)")
-        sharedData.appleIcon = "questionmark"
-    }
-    
+    sharedData.appleIcon = getAppleIcon(summaryIcon: weather.summaryIcon)
+    print("")
+    print("weather.summaryIcon: \(weather.summaryIcon)")
+    print("sharedData.appleIcon: \(sharedData.appleIcon)")
+
     let offset = weather.offset * 3600
     
     let localGMTTime    = NSDate().timeIntervalSince1970
@@ -311,6 +367,34 @@ func updateWeather(_ weather: WeatherModel) {
     
 }
 
+func getAppleIcon(summaryIcon: String) -> String{
+    switch summaryIcon {
+        case "clear-day" :
+            return "sun.max"
+        case "clear-night" :
+            return "sun.max.fill"
+        case "rain" :
+             return "cloud.rain"
+        case "snow" :
+            return "cloud.snow"
+        case "sleet" :
+            return "cloud.sleet"
+        case "wind" :
+            return "wind"
+        case "fog" :
+            return "cloud.fog"
+        case "cloudy" :
+            return "cloud"
+        case "partly-cloudy-day" :
+            return "cloud.sun"
+        case "partly-cloudy-night" :
+            return "cloud.sun.fill"
+        default :
+            print("Case statement default: \(summaryIcon)")
+            return "questionmark"
+    }
+}
+
 func getLocalTime(epochTime: Double, offset: Double) -> String {
     let localTime =             epochTime + offset
     let date =                  NSDate(timeIntervalSince1970: localTime )
@@ -320,4 +404,3 @@ func getLocalTime(epochTime: Double, offset: Double) -> String {
     let localDate =             dateFormatter.string(from: date as Date)
     return localDate
 }
-

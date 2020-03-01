@@ -33,4 +33,18 @@ class SharedData {
     var localSunriseTime:   String = ""
     var localSunsetTime:    String = ""
     var weatherDone:        Bool   = false
+    
+    // Properties fom forecast call
+    var forecastSummary:        [String] = []
+    var forecastSummaryIcon:    [String] = []
+    var forecastAppleIcon:      [String] = []
+
+    var forecastHumidity:       [Double] = []
+    var forecastLowTemp:        [Double] = []
+    var forecastHighTemp:       [Double] = []
+    
+    var forecastOffset:         [Double] = []
+    var forecastSunrise:        [Double] = []
+    var forecastSunset:         [Double] = []
 }
+

@@ -107,6 +107,7 @@ extension WeatherViewController: UITextFieldDelegate {
 
 //MARK: - WeatherManagerDelegate
 extension WeatherViewController: WeatherManagerDelegate{
+    
     func didUpdateLatLongLocation(location: LatLongLocationModel) {
         DispatchQueue.main.async {
             print("======================")
@@ -159,6 +160,10 @@ extension WeatherViewController: WeatherManagerDelegate{
             self.sunRise.text   = sharedData.localSunriseTime
             self.sunSet.text    = sharedData.localSunsetTime
         }
+    }
+    
+    func didUpdateForecast(forecast: ForecastModel) {
+        print("inside didUpdateForecast")
     }
     
     func didFailWithError(error: Error) {

@@ -12,49 +12,39 @@ let weatherAppid = "ce110c139ae40e4bc757dd1fa9502e5d"
 let weatherUnits = "si"
 let weatherURL = "https://api.darksky.net/forecast/"
 
-//MARK: - JSON Weather structures
-struct WeatherData: Codable {
-    let currently:  CurrentConditions
-    let daily:      DailyConditions
-    let offset:     Double
+//MARK: - JSON Forecast structures
+struct ForecastData: Codable {
+    let offset: Double
+    let daily:  DailyForecasts
 }
 
-struct CurrentConditions: Codable {
-    let summary:                String
-    let icon:                   String
-    let temperature:            Double
-    let humidity:               Double
-    let apparentTemperature:    Double
+struct DailyForecasts: Codable {
+    let data: [ForecastDaily]
 }
 
-struct DailyConditions: Codable {
-    let summary:    String
-    let icon:       String
-    let data:       [DailyData]
-}
-
-struct DailyData: Codable {
+struct ForecastDaily: Codable {
+    let summary:            String
+    let icon:               String
+    let humidity:           Double
+    let temperatureLow:     Double
+    let temperatureHigh:    Double
     let sunriseTime:        Double
     let sunsetTime:         Double
-    let temperatureHigh:    Double
-    let temperatureLow:     Double
+
 }
 
-//MARK: - Weather Data Model
-struct WeatherModel {
-    let summary:        String
-    let summaryIcon:    String
+//MARK: - Forecast Data Model
+struct ForecastModel {
+    let forecastSummary:        [String]
+    let forecastSummaryIcon:    [String]
 
-    let temperature:    Double
+    let forecastHumidity:       [Double]
+    let forecastLowTemp:        [Double]
+    let forecastHighTemp:       [Double]
     
-    let feelsLike:      Double
-    let humidity:       Double
-    let lowTemp:        Double
-    let highTemp:       Double
-    
-    let offset:         Double
-    let sunrise:        Double
-    let sunset:         Double
+    let forecastOffset:         [Double]
+    let forecastSunrise:        [Double]
+    let forecastSunset:         [Double]
 }
 
 class SharedData {
@@ -82,6 +72,18 @@ class SharedData {
     var localSunriseTime:   String = ""
     var localSunsetTime:    String = ""
     var weatherDone:        Bool   = false
+    
+    // Properties fom forecast call
+    var forecastSummary:        [String] = []
+    var forecastSummaryIcon:    [String] = []
+
+    var forecastHumidity:       [Double] = []
+    var forecastLowTemp:        [Double] = []
+    var forecastHighTemp:       [Double] = []
+    
+    var forecastOffset:         [Double] = []
+    var forecastSunrise:        [Double] = []
+    var forecastSunset:         [Double] = []
 }
 
 var sharedData = SharedData.sharedData
@@ -116,60 +118,83 @@ func queryForecast(with urlString: String) {
             }
             if let safeData = data {
                 // if let weather = self.parseJSONForecast(safeData) {
-                if let weather = parseJSONForecast(safeData) {
-                    updateForecast(weather: weather)
-                    //self.delegate?.didUpdateForecast(weather)
+                if let forecast = parseJSONForecast(safeData) {
+                    updateForecast(forecast: forecast)
+                    //self.delegate?.didUpdateForecast(forecast)
                 } else {
-                    print("Weather: parseJSON failed")
+                    print("parseJSONForecast failed")
                 }
             }
         }
         task.resume()
     } else {
-        print("URL call failed")
+        print("queryForecast URL call failed")
     }
 }
 
-func parseJSONForecast(_ weatherData: Data) -> WeatherModel? {
+func parseJSONForecast(_ forecastData: Data) -> ForecastModel? {
     
     let decoder = JSONDecoder()
     print("======================")
-    do { let decodedData = try decoder.decode(WeatherData.self, from: weatherData)
+    do { let decodedData = try decoder.decode(ForecastData.self, from: forecastData)
+   
+        var summary:     [String] = []
+        var summaryIcon: [String] = []
+        var humidity:    [Double] = []
+        var lowTemp:     [Double] = []
+        var highTemp:    [Double] = []
+        var offset:      [Double] = []
+        var sunrise:     [Double] = []
+        var sunset:      [Double] = []
         
-        let summary =       decodedData.currently.summary
-        let summaryIcon =   decodedData.currently.icon
-        let temperature =   decodedData.currently.temperature
-        let feelsLike =     decodedData.currently.apparentTemperature
-        let humidity =      decodedData.currently.humidity
-        let lowTemp =       decodedData.daily.data[0].temperatureLow
-        let highTemp =      decodedData.daily.data[0].temperatureHigh
-        let offset =        decodedData.offset
-        let sunrise =       decodedData.daily.data[0].sunriseTime
-        let sunset =        decodedData.daily.data[0].sunsetTime
-        
-        let weatherResult = WeatherModel(
-            summary:        summary,
-            summaryIcon:    summaryIcon,
-            temperature:    temperature,
-            feelsLike:      feelsLike,
-            humidity:       humidity,
-            lowTemp:        lowTemp,
-            highTemp:       highTemp,
-            offset:         offset,
-            sunrise:        sunrise,
-            sunset:         sunset
+        for i in 1...7 {
+            summary.append(decodedData.daily.data[i].summary)
+            summaryIcon.append(decodedData.daily.data[i].icon)
+            humidity.append(decodedData.daily.data[i].humidity)
+            lowTemp.append(decodedData.daily.data[i].temperatureLow)
+            highTemp.append(decodedData.daily.data[i].temperatureHigh)
+            offset.append(decodedData.offset)
+            sunrise.append(decodedData.daily.data[i].sunriseTime)
+            sunset.append(decodedData.daily.data[i].sunsetTime)
+            
+        }
+
+        let forecastResult = ForecastModel(
+            forecastSummary:        summary,
+            forecastSummaryIcon:    summaryIcon,
+            forecastHumidity:       humidity,
+            forecastLowTemp:        lowTemp,
+            forecastHighTemp:       highTemp,
+            forecastOffset:         offset,
+            forecastSunrise:        sunrise,
+            forecastSunset:         sunset
         )
-        print("parseJSONForecast: returning weatherResult")
-        return weatherResult
+        print("parseJSONForecast: returning forecastResult")
+        return forecastResult
     } catch {
-        print("Inside parseJSONWeather catch")
+        print("Inside parseJSONForecast catch")
         return nil
     }
 }
 
-func updateForecast(weather : WeatherModel) {
+func updateForecast(forecast: ForecastModel) {
     print("======================")
-    print("updateForecast: current temperature \(weather.temperature)")
+
+    sharedData.forecastSummary     = forecast.forecastSummary
+    sharedData.forecastSummaryIcon = forecast.forecastSummaryIcon
+    
+    sharedData.forecastHumidity = forecast.forecastHumidity
+    sharedData.forecastLowTemp  = forecast.forecastLowTemp
+    sharedData.forecastHighTemp = forecast.forecastHighTemp
+        
+    sharedData.forecastOffset  = forecast.forecastOffset
+    sharedData.forecastSunrise = forecast.forecastSunrise
+    sharedData.forecastSunset  = forecast.forecastSunset
+        
+    print("updateForecast: ForecastModel Daily low \(forecast.forecastLowTemp)")
+    print("updateForecast: sharedData Daily low \(sharedData.forecastLowTemp)")
+    print("updateForecast: sharedData Daily high \(sharedData.forecastHighTemp)")
+    
 }
 
 fetchForecast(latitude: latitude, longitude: longitude)
