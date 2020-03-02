@@ -46,5 +46,6 @@ class SharedData {
     var forecastOffset:         [Double] = []
     var forecastSunrise:        [Double] = []
     var forecastSunset:         [Double] = []
+    var forecastDone:            Bool = false
 }
 

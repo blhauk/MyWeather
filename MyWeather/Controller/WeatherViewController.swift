@@ -32,6 +32,8 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var sunSet: UILabel!
     @IBOutlet weak var latitude: UILabel!
     @IBOutlet weak var longitude: UILabel!
+    @IBOutlet weak var tomorrowLow: UILabel!
+    @IBOutlet weak var tomorrowHigh: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -152,13 +154,21 @@ extension WeatherViewController: WeatherManagerDelegate{
             
             self.currentTemp.text     = String(format: "%3.1f", sharedData.temperature)
             
-            self.feelsLike.text =  String(format: "%3.1f°C", sharedData.feelsLike)
-            self.humidity.text  = String(format: "%3.0f%%", sharedData.humidity*100)
-            self.lowTemp.text   = String(format: "%3.1f°C", sharedData.lowTemp)
-            self.highTemp.text  = String(format: "%3.1f°C", sharedData.highTemp)
-            self.localTime.text = sharedData.localTime
-            self.sunRise.text   = sharedData.localSunriseTime
-            self.sunSet.text    = sharedData.localSunsetTime
+            self.feelsLike.text =    String(format: "%3.1f°C", sharedData.feelsLike)
+            self.humidity.text  =    String(format: "%3.0f%%", sharedData.humidity*100)
+            self.lowTemp.text   =    String(format: "%3.1f°C", sharedData.lowTemp)
+            self.highTemp.text  =    String(format: "%3.1f°C", sharedData.highTemp)
+            self.localTime.text =    sharedData.localTime
+            self.sunRise.text   =    sharedData.localSunriseTime
+            self.sunSet.text    =    sharedData.localSunsetTime
+            while !sharedData.forecastDone {
+                print("didUpdateWeather: Waiting on forecastDone")
+                usleep(100000) // Sleep for 0.1 sec
+            }
+            sharedData.forecastDone  = false
+            print("didUpdateWeather: sharedData.forecastLowTemp: \(sharedData.forecastLowTemp)")
+            self.tomorrowLow.text =  String(format: "%3.1f°C", sharedData.forecastLowTemp[0])
+            self.tomorrowHigh.text = String(format: "%3.1f°C", sharedData.forecastHighTemp[0])
         }
     }
     
