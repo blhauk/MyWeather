@@ -10,7 +10,6 @@ import UIKit
 import CoreLocation
 
 class WeatherViewController: UIViewController {
-    
     var weatherManager = WeatherManager()
     let locationManager = CLLocationManager()
     
@@ -48,9 +47,14 @@ class WeatherViewController: UIViewController {
         weatherManager.delegate  = self
         searchTextField.delegate = self
     }
+    
     @IBAction func locationPressed(_ sender: UIButton) {
         //locationManager.requestLocation()
         locationManager.startUpdatingLocation()
+    }
+    
+    @IBAction func forecastPressed(_ sender: UIButton) {
+        self.performSegue(withIdentifier: "gotoForecast", sender: self)
     }
     
 }

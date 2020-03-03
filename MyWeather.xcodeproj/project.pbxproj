@@ -21,6 +21,7 @@
 		297F4EE8240B8EEF00EE0B4D /* ForecastModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297F4EE7240B8EEF00EE0B4D /* ForecastModel.swift */; };
 		29B016BD240391600044F879 /* CountryCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B016BC240391600044F879 /* CountryCodes.swift */; };
 		29C0855B240CE388002A860E /* UpdateSharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C0855A240CE388002A860E /* UpdateSharedData.swift */; };
+		29FF0070240E2DA90069CA15 /* ForecastViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF006F240E2DA90069CA15 /* ForecastViewContoller.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 		29B016BC240391600044F879 /* CountryCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodes.swift; sourceTree = "<group>"; };
 		29C0855A240CE388002A860E /* UpdateSharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSharedData.swift; sourceTree = "<group>"; };
 		29DF6C3E240A56DC00597BB9 /* Forecast.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Forecast.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		29FF006F240E2DA90069CA15 /* ForecastViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastViewContoller.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 				2924240923FE85FF0059FAA5 /* WeatherManager.swift */,
 				2930055323FE65F800715199 /* WeatherViewController.swift */,
 				29C0855A240CE388002A860E /* UpdateSharedData.swift */,
+				29FF006F240E2DA90069CA15 /* ForecastViewContoller.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -190,6 +193,7 @@
 			files = (
 				2924240223FE7C5E0059FAA5 /* WeatherModel.swift in Sources */,
 				2930055423FE65F800715199 /* WeatherViewController.swift in Sources */,
+				29FF0070240E2DA90069CA15 /* ForecastViewContoller.swift in Sources */,
 				2924240023FE7BEA0059FAA5 /* CityLocationModel.swift in Sources */,
 				29C0855B240CE388002A860E /* UpdateSharedData.swift in Sources */,
 				2924240823FE7E850059FAA5 /* SharedDataModel.swift in Sources */,
