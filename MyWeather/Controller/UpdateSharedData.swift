@@ -46,7 +46,8 @@ func updateForecast(forecast: ForecastModel) {
     sharedData.forecastHumidity = forecast.forecastHumidity
     sharedData.forecastLowTemp  = forecast.forecastLowTemp
     sharedData.forecastHighTemp = forecast.forecastHighTemp
-        
+    
+    sharedData.forecastTime    = forecast.forecastTime
     sharedData.forecastOffset  = forecast.forecastOffset
     sharedData.forecastSunrise = forecast.forecastSunrise
     sharedData.forecastSunset  = forecast.forecastSunset

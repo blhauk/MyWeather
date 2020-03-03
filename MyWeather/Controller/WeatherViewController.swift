@@ -31,8 +31,6 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var sunSet: UILabel!
     @IBOutlet weak var latitude: UILabel!
     @IBOutlet weak var longitude: UILabel!
-    @IBOutlet weak var tomorrowLow: UILabel!
-    @IBOutlet weak var tomorrowHigh: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -171,8 +169,6 @@ extension WeatherViewController: WeatherManagerDelegate{
             }
             sharedData.forecastDone  = false
             print("didUpdateWeather: sharedData.forecastLowTemp: \(sharedData.forecastLowTemp)")
-            self.tomorrowLow.text =  String(format: "%3.1f°C", sharedData.forecastLowTemp[0])
-            self.tomorrowHigh.text = String(format: "%3.1f°C", sharedData.forecastHighTemp[0])
         }
     }
     

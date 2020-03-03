@@ -24,6 +24,7 @@ struct ForecastDaily: Codable {
     let humidity:           Double
     let temperatureLow:     Double
     let temperatureHigh:    Double
+    let time:               Double
     let sunriseTime:        Double
     let sunsetTime:         Double
 
@@ -39,6 +40,7 @@ struct ForecastModel {
     let forecastLowTemp:        [Double]
     let forecastHighTemp:       [Double]
     
+    let forecastTime:           [Double]
     let forecastOffset:         [Double]
     let forecastSunrise:        [Double]
     let forecastSunset:         [Double]

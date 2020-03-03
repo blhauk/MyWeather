@@ -244,6 +244,7 @@ struct WeatherManager {
             var humidity:    [Double] = []
             var lowTemp:     [Double] = []
             var highTemp:    [Double] = []
+            var time:        [Double] = []
             var offset:      [Double] = []
             var sunrise:     [Double] = []
             var sunset:      [Double] = []
@@ -257,10 +258,10 @@ struct WeatherManager {
                 humidity.append(decodedData.daily.data[i].humidity)
                 lowTemp.append(decodedData.daily.data[i].temperatureLow)
                 highTemp.append(decodedData.daily.data[i].temperatureHigh)
+                time.append(decodedData.daily.data[i].time)
                 offset.append(decodedData.offset)
                 sunrise.append(decodedData.daily.data[i].sunriseTime)
                 sunset.append(decodedData.daily.data[i].sunsetTime)
-                
             }
 
 
@@ -271,6 +272,7 @@ struct WeatherManager {
                 forecastHumidity:       humidity,
                 forecastLowTemp:        lowTemp,
                 forecastHighTemp:       highTemp,
+                forecastTime:           time,
                 forecastOffset:         offset,
                 forecastSunrise:        sunrise,
                 forecastSunset:         sunset
@@ -321,3 +323,26 @@ func getLocalTime(epochTime: Double, offset: Double) -> String {
     let localDate =             dateFormatter.string(from: date as Date)
     return localDate
 }
+
+func getLocalDate(epochTime: Double, offset: Double) -> String {
+    let time =                  epochTime + offset
+    let date =                  NSDate(timeIntervalSince1970: time )
+    let dateFormatter =         DateFormatter()
+    dateFormatter.dateStyle =   .long
+    dateFormatter.timeZone =    TimeZone(abbreviation: "UTC")
+    let localDate =             dateFormatter.string(from: date as Date)
+
+    let commaIndex = localDate.firstIndex(of: ",")!
+    let shortDate = localDate[localDate.startIndex..<commaIndex]
+    
+    let monthIndex = localDate.index(localDate.startIndex, offsetBy: 3)
+    let monthStr = localDate[localDate.startIndex..<monthIndex]
+    
+    let dateIndex = shortDate.firstIndex(of: " ")!
+    var dateStr = String(shortDate[shortDate.index(after: dateIndex)...])
+    let dateInt = Int(dateStr)
+    dateStr = String(format: "%2d", dateInt!)
+    
+    return String(monthStr + " " + dateStr)
+}
+

@@ -41,6 +41,7 @@
 		297F4EE7240B8EEF00EE0B4D /* ForecastModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastModel.swift; sourceTree = "<group>"; };
 		29B016BC240391600044F879 /* CountryCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodes.swift; sourceTree = "<group>"; };
 		29C0855A240CE388002A860E /* UpdateSharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSharedData.swift; sourceTree = "<group>"; };
+		29CCDD4B240E4E8A0058C46D /* DateStuff.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = DateStuff.playground; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		29DF6C3E240A56DC00597BB9 /* Forecast.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Forecast.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		29FF006F240E2DA90069CA15 /* ForecastViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastViewContoller.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -61,6 +62,7 @@
 			children = (
 				2930054E23FE65F800715199 /* MyWeather */,
 				2930054D23FE65F800715199 /* Products */,
+				29CCDD4B240E4E8A0058C46D /* DateStuff.playground */,
 				29DF6C3E240A56DC00597BB9 /* Forecast.playground */,
 			);
 			sourceTree = "<group>";

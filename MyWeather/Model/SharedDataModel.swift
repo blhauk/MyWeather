@@ -43,6 +43,7 @@ class SharedData {
     var forecastLowTemp:        [Double] = []
     var forecastHighTemp:       [Double] = []
     
+    var forecastTime:           [Double] = []
     var forecastOffset:         [Double] = []
     var forecastSunrise:        [Double] = []
     var forecastSunset:         [Double] = []
