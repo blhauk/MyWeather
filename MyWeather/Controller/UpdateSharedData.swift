@@ -27,9 +27,6 @@ func updateCityLocation(_ location: CityLocationModel, _ sharedData: SharedData)
 
 //MARK: - Update SharedData from LatLongLocationModel
 func updateLatLongLocation(_ location: LatLongLocationModel, _ sharedData: SharedData){
-    print("======================")
-    print("updateLatLongLocation: City is: \(location.city)")
-    print("updateLatLongLocation: countryCode is: \(location.countryCode)")
     sharedData.providedLocation = location.city
     sharedData.countryCode = location.countryCode
     sharedData.locationDone = true
@@ -37,8 +34,7 @@ func updateLatLongLocation(_ location: LatLongLocationModel, _ sharedData: Share
 
 //MARK: - Update SharedData from ForecastModel
 func updateForecast(forecast: ForecastModel) {
-    print("======================")
-
+    
     sharedData.forecastSummary     = forecast.forecastSummary
     sharedData.forecastSummaryIcon = forecast.forecastSummaryIcon
     sharedData.forecastAppleIcon   = forecast.forecastAppleIcon
@@ -54,20 +50,12 @@ func updateForecast(forecast: ForecastModel) {
     
     sharedData.forecastDone = true
     
-    print("updateForecast: sharedData forecastSummaryIcon: \(sharedData.forecastSummaryIcon)")
-    print("updateForecast: sharedData forecastAppleIcon: \(sharedData.forecastAppleIcon)")
-    print("updateForecast: sharedData Daily low \(sharedData.forecastLowTemp)")
-    print("updateForecast: sharedData Daily high \(sharedData.forecastHighTemp)")
-    
 }
 
 //MARK: - Update SharedData from WeatherModel
 func updateWeather(_ weather: WeatherModel) {
     
     sharedData.appleIcon = getAppleIcon(summaryIcon: weather.summaryIcon)
-    print("======================")
-    print("updateWeather: weather.summaryIcon: \(weather.summaryIcon)")
-    print("updateWeather: sharedData.appleIcon: \(sharedData.appleIcon)")
 
     let offset = weather.offset * 3600
     

@@ -114,10 +114,6 @@ extension WeatherViewController: WeatherManagerDelegate{
     
     func didUpdateLatLongLocation(location: LatLongLocationModel) {
         DispatchQueue.main.async {
-            print("======================")
-            print("didUpdateLatLongLocation: City: \(location.city)")
-            print("didUpdateLatLongLocation: sharedData Latitude: \(sharedData.latitude)")
-            print("didUpdateLatLongLocation: sharedData locationDone: \(sharedData.locationDone)")
             self.latitude.text = String(format: "%3.3f", sharedData.latitude)
             self.longitude.text = String(format: "%3.3f", sharedData.longitude)
         }
@@ -125,14 +121,6 @@ extension WeatherViewController: WeatherManagerDelegate{
     
     func didUpdateCityLocation(location: CityLocationModel) {
         DispatchQueue.main.async {
-            print("======================")
-            print("didUpdateCityLocation: Latitude: \(sharedData.latitude)")
-            print("didUpdateCityLocation: Longitude: \(sharedData.longitude)")
-            print("didUpdateCityLocation: providedLocation: \(sharedData.providedLocation)")
-            print("didUpdateCityLocation: countryCode: \(sharedData.countryCode)")
-            print("didUpdateCityLocation: countryName: \(sharedData.countryName)")
-            print("didUpdateCityLocation: sharedData Latitude: \(sharedData.latitude)")
-            print("didUpdateCityLocation: sharedData locationDone: \(sharedData.locationDone)")
             self.latitude.text = String(format: "%3.3f", sharedData.latitude)
             self.longitude.text = String(format: "%3.3f", sharedData.longitude)
         }
@@ -140,17 +128,9 @@ extension WeatherViewController: WeatherManagerDelegate{
     
     func didUpdateWeather(weather: WeatherModel) {
         DispatchQueue.main.async {
-            print("======================")
-            print("didUpdateWeather: Temperature: \(sharedData.temperature)")
-            print("didUpdateWeather: Summary: \(sharedData.summary)")
-            print("didUpdateWeather: Summaryicon: \(sharedData.summaryIcon)")
-            print("didUpdateWeather: Appleicon: \(sharedData.appleIcon)")
-            print("didUpdateWeather: Localtime: \(sharedData.localTime)")
-            print("didUpdateWeather: Humidity: \(sharedData.humidity)")
-            
+
             self.cityLabel.text = sharedData.providedLocation + ", " + (countryCodes[sharedData.countryCode] ?? "Unknown")
-            
-            
+                    
             self.summary.text         = sharedData.summary
             self.conditionImage.image = UIImage(systemName: sharedData.appleIcon)
             
@@ -168,12 +148,12 @@ extension WeatherViewController: WeatherManagerDelegate{
                 usleep(100000) // Sleep for 0.1 sec
             }
             sharedData.forecastDone  = false
-            print("didUpdateWeather: sharedData.forecastLowTemp: \(sharedData.forecastLowTemp)")
         }
     }
     
     func didUpdateForecast(forecast: ForecastModel) {
-        print("inside didUpdateForecast")
+        print("======================")
+        print("inside didUpdateForecast - not doing anything - delete me?")
     }
     
     func didFailWithError(error: Error) {

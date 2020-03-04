@@ -17,6 +17,7 @@
 		2930055723FE65F800715199 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2930055523FE65F800715199 /* Main.storyboard */; };
 		2930055923FE65F900715199 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2930055823FE65F900715199 /* Assets.xcassets */; };
 		2930055C23FE65F900715199 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2930055A23FE65F900715199 /* LaunchScreen.storyboard */; };
+		2941A0D7240F5EF1005683FC /* SupportingFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2941A0D6240F5EF1005683FC /* SupportingFunctions.swift */; };
 		2978F82424064190001F14E4 /* LatLongLocationodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2978F82324064190001F14E4 /* LatLongLocationodel.swift */; };
 		297F4EE8240B8EEF00EE0B4D /* ForecastModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297F4EE7240B8EEF00EE0B4D /* ForecastModel.swift */; };
 		29B016BD240391600044F879 /* CountryCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B016BC240391600044F879 /* CountryCodes.swift */; };
@@ -37,12 +38,12 @@
 		2930055823FE65F900715199 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2930055B23FE65F900715199 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2930055D23FE65F900715199 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2941A0D6240F5EF1005683FC /* SupportingFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportingFunctions.swift; sourceTree = "<group>"; };
 		2978F82324064190001F14E4 /* LatLongLocationodel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatLongLocationodel.swift; sourceTree = "<group>"; };
 		297F4EE7240B8EEF00EE0B4D /* ForecastModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastModel.swift; sourceTree = "<group>"; };
 		29B016BC240391600044F879 /* CountryCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodes.swift; sourceTree = "<group>"; };
 		29C0855A240CE388002A860E /* UpdateSharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSharedData.swift; sourceTree = "<group>"; };
 		29CCDD4B240E4E8A0058C46D /* DateStuff.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = DateStuff.playground; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		29DF6C3E240A56DC00597BB9 /* Forecast.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Forecast.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		29FF006F240E2DA90069CA15 /* ForecastViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastViewContoller.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -63,7 +64,6 @@
 				2930054E23FE65F800715199 /* MyWeather */,
 				2930054D23FE65F800715199 /* Products */,
 				29CCDD4B240E4E8A0058C46D /* DateStuff.playground */,
-				29DF6C3E240A56DC00597BB9 /* Forecast.playground */,
 			);
 			sourceTree = "<group>";
 		};
@@ -80,6 +80,7 @@
 			children = (
 				2930054F23FE65F800715199 /* AppDelegate.swift */,
 				2930055123FE65F800715199 /* SceneDelegate.swift */,
+				2941A0D6240F5EF1005683FC /* SupportingFunctions.swift */,
 				2930056323FE665700715199 /* Model */,
 				2930056423FE666C00715199 /* View */,
 				2930056523FE667600715199 /* Controller */,
@@ -196,6 +197,7 @@
 				2924240223FE7C5E0059FAA5 /* WeatherModel.swift in Sources */,
 				2930055423FE65F800715199 /* WeatherViewController.swift in Sources */,
 				29FF0070240E2DA90069CA15 /* ForecastViewContoller.swift in Sources */,
+				2941A0D7240F5EF1005683FC /* SupportingFunctions.swift in Sources */,
 				2924240023FE7BEA0059FAA5 /* CityLocationModel.swift in Sources */,
 				29C0855B240CE388002A860E /* UpdateSharedData.swift in Sources */,
 				2924240823FE7E850059FAA5 /* SharedDataModel.swift in Sources */,
