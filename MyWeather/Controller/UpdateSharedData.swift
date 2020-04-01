@@ -47,9 +47,8 @@ func updateForecast(forecast: ForecastModel) {
     sharedData.forecastOffset  = forecast.forecastOffset
     sharedData.forecastSunrise = forecast.forecastSunrise
     sharedData.forecastSunset  = forecast.forecastSunset
-    
     sharedData.forecastDone = true
-    
+    print("in updateForecast: sharedData.forecastDone = true")
 }
 
 //MARK: - Update SharedData from WeatherModel

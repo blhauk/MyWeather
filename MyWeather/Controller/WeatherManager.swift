@@ -23,7 +23,6 @@ protocol WeatherManagerDelegate {
     func didUpdateCityLocation(location: CityLocationModel)
     func didUpdateLatLongLocation(location: LatLongLocationModel)
     func didUpdateWeather(weather: WeatherModel)
-    func didUpdateForecast(forecast: ForecastModel)
     func didFailWithError(error: Error)
 }
 
@@ -167,6 +166,7 @@ struct WeatherManager {
     }
 
     func queryWeather(with urlString: String) {
+        print("in queryWeather")
         if let url = URL(string: urlString) {
             let session = URLSession(configuration: .default)
             
@@ -183,7 +183,6 @@ struct WeatherManager {
                     }
                     if let forecast = self.parseJSONForecast(safeData) {
                         updateForecast(forecast: forecast)
-                        self.delegate?.didUpdateForecast(forecast: forecast)
                     } else {
                         print("Weather: parseJSON failed")
                     }
@@ -191,7 +190,7 @@ struct WeatherManager {
             }
             task.resume()
         } else {
-            print("URL call failed")
+            print("queryWeather URL call failed")
         }
     }
 

@@ -129,6 +129,7 @@ extension WeatherViewController: WeatherManagerDelegate{
     func didUpdateWeather(weather: WeatherModel) {
         DispatchQueue.main.async {
 
+            print("entering didUpdateWeather")
             self.cityLabel.text = sharedData.providedLocation + ", " + (countryCodes[sharedData.countryCode] ?? "Unknown")
                     
             self.summary.text         = sharedData.summary
@@ -148,12 +149,8 @@ extension WeatherViewController: WeatherManagerDelegate{
                 usleep(100000) // Sleep for 0.1 sec
             }
             sharedData.forecastDone  = false
+            print("didUpdateWeather: sharedData.forecastDone  = false")
         }
-    }
-    
-    func didUpdateForecast(forecast: ForecastModel) {
-        print("======================")
-        print("inside didUpdateForecast - not doing anything - delete me?")
     }
     
     func didFailWithError(error: Error) {

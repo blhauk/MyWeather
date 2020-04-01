@@ -67,3 +67,14 @@ func getLocalDate(epochTime: Double, offset: Double) -> String {
     
     return String(monthStr + " " + dateStr)
 }
+
+func getLocalDay(epochTime: Double, offset: Double) -> String {
+    let time =                  epochTime + offset
+    let date =                  NSDate(timeIntervalSince1970: time )
+    let dateFormatter =         DateFormatter()
+    dateFormatter.timeZone =    TimeZone(abbreviation: "UTC")
+    dateFormatter.dateFormat =  "EEEE"
+    let localDay =             dateFormatter.string(from: date as Date)
+    
+    return localDay
+}

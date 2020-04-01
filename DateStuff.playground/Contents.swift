@@ -14,9 +14,15 @@ func getLocalDate(epochTime: Double, offset: Double) -> String {
     let time =                  epochTime + offset
     let date =                  NSDate(timeIntervalSince1970: time )
     let dateFormatter =         DateFormatter()
-    dateFormatter.dateStyle =   .long
     dateFormatter.timeZone =    TimeZone(abbreviation: "UTC")
-    let localDate =             dateFormatter.string(from: date as Date)
+    dateFormatter.dateFormat =  "EEEE"
+    var localDate =             dateFormatter.string(from: date as Date)
+    print(localDate)
+    
+    dateFormatter.dateStyle =   .long
+    localDate =             dateFormatter.string(from: date as Date)
+    print(localDate)
+
 
     let commaIndex = localDate.firstIndex(of: ",")!
     let shortDate = localDate[localDate.startIndex..<commaIndex]

@@ -55,7 +55,7 @@ class ForecastViewContoller: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        var dates:      [String] = []
+        var days:      [String] = []
         var lowTemps:   [String] = []
         var highTemps:  [String] = []
         var humidities: [String] = []
@@ -65,46 +65,46 @@ class ForecastViewContoller: UIViewController {
         let countryName = countryCodes[countryCode]
         cityName.text = city + ", " + (countryName ?? "Unkown country")
         
-        var date: String
+        var day:  String
         for i in 0...6 {
-            date = getLocalDate(epochTime: sharedData.forecastTime[i], offset: sharedData.forecastOffset[i])
-            dates.append(date)
+            day = getLocalDay(epochTime: sharedData.forecastTime[i], offset: sharedData.forecastOffset[i])
+            days.append(day)
             lowTemps.append(String(format: "%3.1f°C", sharedData.forecastLowTemp[i]))
             highTemps.append(String(format: "%3.1f°C", sharedData.forecastHighTemp[i]))
             humidities.append(String(format: "%3.0f%%", sharedData.forecastHumidity[i]*100))
         }
 
-        day1Date.text = dates[0]
+        day1Date.text = days[0]
         day1Low.text =  lowTemps[0]
         day1High.text = highTemps[0]
         day1Hum.text =  humidities[0]
 
-        day2Date.text = dates[1]
+        day2Date.text = days[1]
         day2Low.text =  lowTemps[1]
         day2High.text = highTemps[1]
         day2Hum.text =  humidities[1]
 
-        day3Date.text = dates[2]
+        day3Date.text = days[2]
         day3Low.text =  lowTemps[2]
         day3High.text = highTemps[2]
         day3Hum.text =  humidities[2]
 
-        day4Date.text = dates[3]
+        day4Date.text = days[3]
         day4Low.text =  lowTemps[3]
         day4High.text = highTemps[3]
         day4Hum.text =  humidities[3]
 
-        day5Date.text = dates[4]
+        day5Date.text = days[4]
         day5Low.text =  lowTemps[4]
         day5High.text = highTemps[4]
         day5Hum.text =  humidities[4]
 
-        day6Date.text = dates[5]
+        day6Date.text = days[5]
         day6Low.text =  lowTemps[5]
         day6High.text = highTemps[5]
         day6Hum.text =  humidities[5]
 
-        day7Date.text = dates[6]
+        day7Date.text = days[6]
         day7Low.text =  lowTemps[6]
         day7High.text = highTemps[6]
         day7Hum.text =  humidities[6]

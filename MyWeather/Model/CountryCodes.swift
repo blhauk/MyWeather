@@ -243,7 +243,7 @@ public var countryCodes: [String: String] = [
 "UG": "Uganda",
 "UA": "Ukraine",
 "AE": "United Arab Emirates",
-"GB": "United Kingdom",
+"GB": "England",
 "US": "United States",
 "UM": "United States Minor Outlying Islands",
 "UY": "Uruguay",
